@@ -65,7 +65,7 @@ function renderTicker() {
   const row = $('tickerRow'); row.innerHTML = '';
   const items = [
     ...window.CF.cryptos.map(c => ({ e: c.emoji, s: c.id, p: usdPer({kind:'crypto',ref:c}), ch: (rates.cryptos[c.id]||{chg:c.snap24h}).chg, dp: c.id==='USDC'?4:6 })),
-    ...window.CF.fiats.slice(0, 5).map(f => ({ e: f.emoji, s: f.id, p: rates.fiats[f.id] || f.usd, ch: 0, dp: f.id==='IDR'?0:3 }))
+    ...window.CF.fiats.slice(0, 5).map(f => ({ e: flagHtml(f.id, 16), s: f.id, p: rates.fiats[f.id] || f.usd, ch: 0, dp: f.id==='IDR'?0:3 }))
   ];
   items.forEach(it => {
     const up = (it.ch || 0) >= 0;
@@ -88,7 +88,7 @@ function updateQuote() {
   const rate = (upFrom / upTo) * (1 - fee);
   $('amtTo').value = a ? (a * rate).toFixed(to.ref.id === 'IDR' ? 0 : 2) : '';
   $('usdFrom').textContent = '≈ $' + fmt(a * upFrom);
-  $('heroOut').textContent = to.ref.id + ' ' + to.ref.emoji;
+  $('heroOut').textContent = to.ref.id;
   $('rateLine').textContent = a ? `1 ${from.ref.id} = ${fmt(rate, from.kind==='fiat'?6:8)} ${to.ref.id}` : 'rate auto-updates';
   $('qRate').textContent = `1 ${from.ref.id} → ${fmt(upFrom / upTo, 8)} ${to.ref.id}`;
   const feeAmt = a * upFrom * fee / upTo;
@@ -107,9 +107,15 @@ function updateQuote() {
   $('convertBtn').disabled = !acct || !a;
 }
 function flip() { const t = from; from = to; to = t; $('amtFrom').value = $('amtTo').value === '' ? '' : ''; syncAssetBtns(); updateQuote(); }
+function flagHtml(id, w) {
+  const r = window.CF.regions[id];
+  return r ? `<img class="fl" style="width:${w||20}px;height:${(w||20)*0.667}px" src="https://flagcdn.com/w40/${r}.png" alt="">` : (window.CF.fiats.find(f=>f.id===id)||{}).emoji || '';
+}
 function syncAssetBtns() {
   [['pickFrom', from], ['pickTo', to]].forEach(([id, a]) => {
-    $(id).querySelector('.a-emoji').textContent = a.ref.emoji;
+    const em = $(id).querySelector('.a-emoji');
+    if (a.kind === 'fiat') em.innerHTML = flagHtml(a.ref.id, 20);
+    else em.textContent = a.ref.emoji;
     $(id).querySelector('.a-sym').textContent = a.ref.id;
   });
   const bf = $('balFrom');
@@ -151,7 +157,7 @@ function renderPickList() {
         .forEach(f => {
           const a = { kind: 'fiat', ref: f };
           const b = document.createElement('button'); b.className = 'pk-pill';
-          b.innerHTML = `<span class="n">${f.emoji}</span><b>${f.id}</b><span class="arr">⇄</span>`;
+          b.innerHTML = `<img class="fl" src="https://flagcdn.com/w40/${window.CF.regions[f.id]}.png" alt=""> <b>${f.id}</b>`;
           b.title = f.name;
           b.onclick = () => pickAsset(a);
           grid.appendChild(b);
@@ -406,7 +412,7 @@ APP.pmTypes.forEach(t => {
   b.onclick = () => { pmType = t.id; document.querySelectorAll('.pm-types button').forEach(x => x.classList.toggle('on', x === b)); renderPMForm(); };
   $('pmTypes').appendChild(b);
 });
-$('pmFiat').innerHTML = window.CF.fiats.map(f => `<option value="${f.id}">${f.emoji} ${f.id}</option>`).join('');
+$('pmFiat').innerHTML = window.CF.fiats.map(f => `<option value="${f.id}">${f.id} — ${f.name}</option>`).join('');
 $('pmSave').onclick = savePM;
 $('pmFields').addEventListener('input', validatePM);
 

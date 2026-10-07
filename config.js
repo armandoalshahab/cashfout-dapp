@@ -81,14 +81,14 @@ window.CF = {
     { id: 'applepay', label: 'Apple Pay', emoji: '🍎', fields: [
         { k: 'email', label: 'Apple ID', placeholder: 'you@icloud.com' } ],
       eta: 'instant' },
-    { id: 'googlepay', label: 'Google Pay', emoji: '🇬', fields: [
+    { id: 'googlepay', label: 'Google Pay', emoji: 'Ⓖ', fields: [
         { k: 'email', label: 'Google account', placeholder: 'you@gmail.com' } ],
       eta: 'instant' },
     { id: 'debitcard', label: 'Debit Card', emoji: '💳', fields: [
         { k: 'holder', label: 'Name on card', placeholder: 'Full name' },
         { k: 'number', label: 'Card number', placeholder: '•••• •••• •••• 1234', masked: true } ],
       eta: '1–3 days' },
-    { id: 'creditcard', label: 'Credit Card', emoji: '🪪', fields: [
+    { id: 'creditcard', label: 'Credit Card', emoji: '💳', fields: [
         { k: 'holder', label: 'Name on card', placeholder: 'Full name' },
         { k: 'number', label: 'Card number', placeholder: '•••• •••• •••• 1234', masked: true } ],
       eta: '1–3 days' },
@@ -113,14 +113,14 @@ window.CF = {
         { k: 'bank', label: 'Bank', placeholder: 'Your bank name' },
         { k: 'holder', label: 'Account holder', placeholder: 'Full name' } ],
       eta: '< 1h' },
-    { id: 'pix',      label: 'Pix', emoji: '🇧🇷', fields: [
+    { id: 'pix',      label: 'Pix', emoji: '💠', fields: [
         { k: 'key', label: 'Pix key', placeholder: 'CPF / email / phone / EVP', masked: true } ],
       eta: 'instant' },
-    { id: 'spei',     label: 'SPEI', emoji: '🇲🇽', fields: [
+    { id: 'spei',     label: 'SPEI', emoji: '🪙', fields: [
         { k: 'bank', label: 'Bank', placeholder: 'Bank name' },
         { k: 'clabe', label: 'CLABE (18 digits)', placeholder: '012345678901234567', masked: true } ],
       eta: '< 1h' },
-    { id: 'klarna',   label: 'Klarna', emoji: '🩷', fields: [
+    { id: 'klarna',   label: 'Klarna', emoji: '🛒', fields: [
         { k: 'email', label: 'Klarna email', placeholder: 'you@mail.com' } ],
       eta: '< 24h' },
     { id: 'ewallet',  label: 'ID E-Wallet', emoji: '📲', fields: [
@@ -134,3 +134,4 @@ window.CF = {
   },
   docs: 'https://docs.monad.xyz/developer-essentials/testnet.md'
 };
+window.CF.regions = { USD:'us', EUR:'eu', GBP:'gb', JPY:'jp', IDR:'id', CHF:'ch', CAD:'ca', AUD:'au', SGD:'sg', MYR:'my', CNY:'cn', HKD:'hk', KRW:'kr', INR:'in', THB:'th', PHP:'ph', VND:'vn', BRL:'br', MXN:'mx', COP:'co', ARS:'ar', CLP:'cl', PEN:'pe', UYU:'uy', ZAR:'za', NGN:'ng', KES:'ke', GHS:'gh', EGP:'eg', MAD:'ma', AED:'ae', SAR:'sa', QAR:'qa', KWD:'kw', TRY:'tr', PLN:'pl', CZK:'cz', HUF:'hu', RON:'ro', SEK:'se', NOK:'no', DKK:'dk', ILS:'il', NZD:'nz', PKR:'pk', BDT:'bd', LKR:'lk', NPR:'np' };
