@@ -6,7 +6,7 @@
 **Reference UX:** switchere.com/converter (currency converter layout), Monad-flavoured dark fintech theme.
 
 ## Tabs
-1. **Swap** — switcher-style converter: FROM ⇄ TO asset picker (crypto side: MON / WMON / USDC on-chain; fiat side: USD, IDR, JPY, EUR, GBP, SGD, MYR, CNY), live rate line, one-click flip direction, 0.5% cashout fee quoted explicitly, route summary ("MON → vault → USD via BCA personal"), quick-amount chips, MAX-from-balance.
+1. **Swap** — switcher-style converter: FROM ⇄ TO asset picker (crypto side: MON / WMON / USDC on-chain; fiat side: **48 currencies** — USD, IDR, JPY, EUR, GBP, CHF, CAD, AUD, SGD, MYR, CNY, HKD, KRW, INR, THB, PHP, VND, BRL, MXN, COP, ARS, CLP, PEN, UYU, ZAR, NGN, KES, GHS, EGP, MAD, AED, SAR, QAR, KWD, TRY, PLN, CZK, HUF, RON, SEK, NOK, DKK, ILS, NZD, PKR, BDT, LKR, NPR — rendered as a flag-pill grid ("USD ⇄ Crypto") with live search), live rate line, one-click flip direction, 0.5% cashout fee quoted explicitly, route summary ("MON → vault → USD via BCA personal"), quick-amount chips, MAX-from-balance.
 2. **Portfolio** — real on-chain balances (native MON via `eth_getBalance`, USDC via ERC-20 `balanceOf` eth_call), labelled `FIAT-d` demo cash account, total value, conversion history with MonadVision explorer links per tx, per-asset Convert shortcut.
 3. **Payment method** — bank transfer (BCA/Mandiri/BNI/BRI/CIMB), e-wallet (GoPay/OVO/DANA/ShopeePay), PayPal, Visa/MC. Numbers masked in UI, stored in browser localStorage only. First method = default destination shown in the Swap quote box.
 
