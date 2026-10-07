@@ -151,7 +151,7 @@ function renderPickList() {
         .forEach(f => {
           const a = { kind: 'fiat', ref: f };
           const b = document.createElement('button'); b.className = 'pk-pill';
-          b.innerHTML = `<span class="n">${f.emoji}</span><b>${f.id}</b><span class="arr">⇄</span><i>Crypto</i>`;
+          b.innerHTML = `<span class="n">${f.emoji}</span><b>${f.id}</b><span class="arr">⇄</span>`;
           b.title = f.name;
           b.onclick = () => pickAsset(a);
           grid.appendChild(b);
