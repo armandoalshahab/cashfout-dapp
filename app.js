@@ -129,22 +129,47 @@ function openPicker() {
   $('pickOverlay').classList.remove('hidden');
   renderPickList();
 }
+function pickAsset(a) {
+  if (pickSide === 'from') from = a; else to = a;
+  $('pickOverlay').classList.add('hidden'); syncAssetBtns(); updateQuote();
+}
 function renderPickList() {
   const list = $('pkList'); list.innerHTML = '';
-  const src = pickTab === 'crypto' ? window.CF.cryptos.map(r => ({ kind: 'crypto', ref: r }))
-                                   : window.CF.fiats.map(r => ({ kind: 'fiat', ref: r }));
+  $('pkCrypto').classList.toggle('active', pickTab === 'crypto');
+  $('pkFiat').classList.toggle('active', pickTab === 'fiat');
+  if (pickTab === 'fiat') {
+    // switchere-style grid: flag + code → Crypto, with search
+    const wrap = document.createElement('div');
+    wrap.innerHTML = `<input class="pk-search" placeholder="Search currency… (USD, Rupiah, Yen…)" autocomplete="off">`;
+    const search = wrap.firstElementChild; list.appendChild(search);
+    const grid = document.createElement('div'); grid.className = 'pk-grid'; list.appendChild(grid);
+    const draw = () => {
+      const q = search.value.toLowerCase().trim();
+      grid.innerHTML = '';
+      window.CF.fiats
+        .filter(f => !q || f.id.toLowerCase().includes(q) || f.name.toLowerCase().includes(q))
+        .forEach(f => {
+          const a = { kind: 'fiat', ref: f };
+          const b = document.createElement('button'); b.className = 'pk-pill';
+          b.innerHTML = `<span class="n">${f.emoji}</span><b>${f.id}</b><span class="arr">⇄</span><i>Crypto</i>`;
+          b.title = f.name;
+          b.onclick = () => pickAsset(a);
+          grid.appendChild(b);
+        });
+      if (!grid.children.length) grid.innerHTML = '<div class="pm-empty" style="grid-column:1/-1">No currency matches "' + search.value + '"</div>';
+    };
+    search.oninput = draw; draw();
+    search.focus();
+    return;
+  }
+  const src = window.CF.cryptos.map(r => ({ kind: 'crypto', ref: r }));
   src.forEach(a => {
     const price = usdPer(a);
     const b = document.createElement('button'); b.className = 'pk-row';
-    b.innerHTML = `<span class="n">${a.ref.emoji}</span><span><b>${a.ref.id}</b><i>${a.ref.name}</i></span><span class="r">${a.kind==='crypto' ? '$'+fmt(price,6) : fmt(price,2)+'/USD'}</span>`;
-    b.onclick = () => {
-      if (pickSide === 'from') from = a; else to = a;
-      $('pickOverlay').classList.add('hidden'); syncAssetBtns(); updateQuote();
-    };
+    b.innerHTML = `<span class="n">${a.ref.emoji}</span><span><b>${a.ref.id}</b><i>${a.ref.name}</i></span><span class="r">$${fmt(price,6)}</span>`;
+    b.onclick = () => pickAsset(a);
     list.appendChild(b);
   });
-  $('pkCrypto').classList.toggle('active', pickTab === 'crypto');
-  $('pkFiat').classList.toggle('active', pickTab === 'fiat');
 }
 
 /* ---------- wallet ---------- */
