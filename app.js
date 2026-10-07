@@ -62,16 +62,24 @@ function usdPer(assetRef) {
   return c ? c.usd : assetRef.ref.usd;
 }
 function renderTicker() {
-  const row = $('tickerRow'); row.innerHTML = '';
+  const row = $('tickerRow');
   const items = [
     ...window.CF.cryptos.map(c => ({ e: c.emoji, s: c.id, p: usdPer({kind:'crypto',ref:c}), ch: (rates.cryptos[c.id]||{chg:c.snap24h}).chg, dp: c.id==='USDC'?4:6 })),
-    ...window.CF.fiats.slice(0, 5).map(f => ({ e: flagHtml(f.id, 16), s: f.id, p: rates.fiats[f.id] || f.usd, ch: 0, dp: f.id==='IDR'?0:3 }))
+    ...window.CF.fiats.map(f => ({ e: flagHtml(f.id, 16), s: f.id, p: rates.fiats[f.id] || f.usd, ch: 0, dp: (f.id==='IDR'||f.id==='VND'||f.id==='KRW'||f.id==='COP')?0:3 }))
   ];
-  items.forEach(it => {
-    const up = (it.ch || 0) >= 0;
-    row.insertAdjacentHTML('beforeend',
-      `<span class="tk"><b>${it.e} ${it.s}</b> ${fmt(it.p, it.dp)} ${it.ch ? `<span class="${up?'up':'dn'}">${up?'▲':'▼'} ${Math.abs(it.ch).toFixed(2)}%</span>` : ''}</span>`);
-  });
+  if (!row.dataset.built) {
+    // build structure once; marquee loop = two identical halves
+    row.innerHTML = [0,1].map(() => items.map(it =>
+      `<span class="tk" data-tk="${it.s}"><b>${it.e} ${it.s}</b> <span class="v">${fmt(it.p, it.dp)}</span>${it.ch ? ` <span class="c"></span>` : ''}</span>`
+    ).join('')).join('');
+    row.dataset.built = '1';
+  } else {
+    items.forEach(it => row.querySelectorAll(`[data-tk="${it.s}"]`).forEach(el => {
+      el.querySelector('.v').textContent = fmt(it.p, it.dp);
+      const c = el.querySelector('.c');
+      if (c && it.ch) { const up = it.ch >= 0; c.textContent = `${up?'▲':'▼'} ${Math.abs(it.ch).toFixed(2)}%`; c.className = 'c ' + (up?'up':'dn'); }
+    }));
+  }
   $('lastRefresh').textContent = 'rates: ' + rates.src + ' · ' + new Date().toLocaleTimeString();
 }
 function setStatus(kind, txt) {

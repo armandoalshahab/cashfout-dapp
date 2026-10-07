@@ -25,9 +25,11 @@ small{color:var(--mut)} code{background:#241541;padding:1px 6px;border-radius:5p
 .btn.primary{background:var(--grad);border:none;color:#fff}
 .btn.big{width:100%;padding:14px;font-size:16px;border-radius:12px;margin-top:14px}
 .btn:disabled{opacity:.45;cursor:not-allowed}
-.ticker{border-bottom:1px solid var(--line);background:#150b2acc;overflow-x:auto;white-space:nowrap}
-.ticker-row{display:inline-flex;gap:26px;padding:8px 22px;font-size:12.5px}
-.tk b{color:var(--txt)} .tk span.up{color:var(--grn)} .tk span.dn{color:var(--red)} .tk{color:var(--mut)}
+.ticker{border-bottom:1px solid var(--line);background:#150b2acc;overflow:hidden}
+.ticker-row{display:inline-flex;gap:26px;padding:8px 22px;font-size:12.5px;white-space:nowrap;animation:marquee 90s linear infinite;will-change:transform}
+.ticker:hover .ticker-row{animation-play-state:paused}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tk b{color:var(--txt)} .tk span.up,.tk .c.up{color:var(--grn)} .tk span.dn,.tk .c.dn{color:var(--red)} .tk{color:var(--mut)}
 main{max-width:880px;margin:26px auto;padding:0 18px}
 .view{display:none}.view.active{display:block}
 .hero{text-align:center;margin-bottom:20px}
