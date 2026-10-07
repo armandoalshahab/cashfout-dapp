@@ -34,22 +34,60 @@ window.CF = {
     { id: 'AUD', name: 'Australian Dollar', emoji: '🇦🇺', locale: 'en-AU', usd: 1.52 }
   ],
   pmTypes: [
-    { id: 'bank',    label: 'Bank Transfer', emoji: '🏦', fields: [
-        { k: 'bank', label: 'Bank', placeholder: 'BCA / Mandiri / BNI', type: 'select', options: ['BCA','Mandiri','BNI','BRI','CIMB'] },
+    { id: 'bank',     label: 'Bank Account', emoji: '🏦', fields: [
+        { k: 'bank', label: 'Bank', placeholder: 'BCA / Mandiri / BNI', type: 'select', options: ['BCA','Mandiri','BNI','BRI','CIMB','Other'] },
         { k: 'holder', label: 'Account holder', placeholder: 'Full name' },
         { k: 'number', label: 'Account number', placeholder: '1234567890', masked: true } ],
       eta: '1×24h' },
-    { id: 'ewallet', label: 'E-Wallet', emoji: '📲', fields: [
-        { k: 'wallet', label: 'Wallet', type: 'select', options: ['GoPay','OVO','DANA','ShopeePay'] },
-        { k: 'number', label: 'Phone number', placeholder: '08xxxxxxxxxx', masked: true } ],
+    { id: 'applepay', label: 'Apple Pay', emoji: '🍎', fields: [
+        { k: 'email', label: 'Apple ID', placeholder: 'you@icloud.com' } ],
       eta: 'instant' },
-    { id: 'paypal',  label: 'PayPal', emoji: '🅿️', fields: [
-        { k: 'email', label: 'PayPal email', placeholder: 'you@mail.com' } ],
-      eta: '< 1h' },
-    { id: 'card',    label: 'Visa / Mastercard', emoji: '💳', fields: [
+    { id: 'googlepay', label: 'Google Pay', emoji: '🇬', fields: [
+        { k: 'email', label: 'Google account', placeholder: 'you@gmail.com' } ],
+      eta: 'instant' },
+    { id: 'debitcard', label: 'Debit Card', emoji: '💳', fields: [
         { k: 'holder', label: 'Name on card', placeholder: 'Full name' },
         { k: 'number', label: 'Card number', placeholder: '•••• •••• •••• 1234', masked: true } ],
-      eta: '1–3 days' }
+      eta: '1–3 days' },
+    { id: 'creditcard', label: 'Credit Card', emoji: '🪪', fields: [
+        { k: 'holder', label: 'Name on card', placeholder: 'Full name' },
+        { k: 'number', label: 'Card number', placeholder: '•••• •••• •••• 1234', masked: true } ],
+      eta: '1–3 days' },
+    { id: 'neteller', label: 'Neteller', emoji: '🌐', fields: [
+        { k: 'acct', label: 'Neteller ID', placeholder: '12345678', masked: true },
+        { k: 'code', label: 'Security code', placeholder: '••••', masked: true } ],
+      eta: 'instant' },
+    { id: 'paypal',   label: 'PayPal', emoji: '🅿️', fields: [
+        { k: 'email', label: 'PayPal email', placeholder: 'you@mail.com' } ],
+      eta: '< 1h' },
+    { id: 'revolut',  label: 'Revolut', emoji: '🔵', fields: [
+        { k: 'email', label: 'Email / phone', placeholder: 'you@mail.com' },
+        { k: 'handle', label: 'Revolut tag', placeholder: '@username' } ],
+      eta: 'instant' },
+    { id: 'skrill',   label: 'Skrill', emoji: '💰', fields: [
+        { k: 'email', label: 'Skrill email', placeholder: 'you@mail.com' } ],
+      eta: 'instant' },
+    { id: 'astropay', label: 'AstroPay', emoji: '🅰️', fields: [
+        { k: 'number', label: 'Virtual card number', placeholder: '•••• •••• •••• 1234', masked: true } ],
+      eta: 'instant' },
+    { id: 'trustly',  label: 'Trustly', emoji: '🛂', fields: [
+        { k: 'bank', label: 'Bank', placeholder: 'Your bank name' },
+        { k: 'holder', label: 'Account holder', placeholder: 'Full name' } ],
+      eta: '< 1h' },
+    { id: 'pix',      label: 'Pix', emoji: '🇧🇷', fields: [
+        { k: 'key', label: 'Pix key', placeholder: 'CPF / email / phone / EVP', masked: true } ],
+      eta: 'instant' },
+    { id: 'spei',     label: 'SPEI', emoji: '🇲🇽', fields: [
+        { k: 'bank', label: 'Bank', placeholder: 'Bank name' },
+        { k: 'clabe', label: 'CLABE (18 digits)', placeholder: '012345678901234567', masked: true } ],
+      eta: '< 1h' },
+    { id: 'klarna',   label: 'Klarna', emoji: '🩷', fields: [
+        { k: 'email', label: 'Klarna email', placeholder: 'you@mail.com' } ],
+      eta: '< 24h' },
+    { id: 'ewallet',  label: 'ID E-Wallet', emoji: '📲', fields: [
+        { k: 'wallet', label: 'Wallet', type: 'select', options: ['GoPay','OVO','DANA','ShopeePay'] },
+        { k: 'number', label: 'Phone number', placeholder: '08xxxxxxxxxx', masked: true } ],
+      eta: 'instant' }
   ],
   ratesApi: {
     crypto: 'https://api.coingecko.com/api/v3/simple/price?ids=monad,usd-coin&vs_currencies=usd&include_24h_change=true',

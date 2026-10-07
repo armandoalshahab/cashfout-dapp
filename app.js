@@ -315,7 +315,7 @@ function renderPM() {
   const list = $('pmList'); list.innerHTML = '';
   if (!methods.length) list.innerHTML = '<div class="pm-empty">No payout methods yet.<br>Add a bank / e-wallet / card on the right →</div>';
   methods.forEach((m, i) => {
-    const pt = APP.pmTypes.find(t => t.id === m.type);
+    const pt = APP.pmTypes.find(t => t.id === m.type) || { label: m.type, emoji: '💳', fields: [] };
     const div = document.createElement('div'); div.className = 'pm-item';
     div.innerHTML = `<span class="pe">${pt.emoji}</span><span class="pi-b"><b>${m.label || pt.label}${i===0?'<span class="def">DEFAULT</span>':''}</b><small>${masked(m)} · ${pt.label} · ETA ${pt.eta} · fiat ${m.fiat}</small></span><button class="del" title="remove">✕</button>`;
     div.querySelector('.del').onclick = () => { methods.splice(i, 1); save('cf.methods', methods); renderPM(); updateQuote(); toast('method removed'); };
@@ -324,7 +324,8 @@ function renderPM() {
 }
 function masked(m) {
   return Object.entries(m.data).filter(([k,v])=>v).map(([k,v]) => {
-    const f = (APP.pmTypes.find(t=>t.id===m.type).fields.find(x=>x.k===k) || {});
+    const ptm = APP.pmTypes.find(t=>t.id===m.type) || {fields:[]};
+    const f = (ptm.fields.find(x=>x.k===k) || {});
     return `${k}: ${f.masked ? '••••' + String(v).slice(-4) : v}`;
   }).join(' · ');
 }
