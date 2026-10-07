@@ -200,8 +200,7 @@ img.fl{display:inline-block;border-radius:2px;object-fit:cover;vertical-align:mi
 @media(max-height:1050px){
   #view-swap{display:flex;flex-direction:column}
   #view-swap .hero{order:1}
-  #view-swap .powered{order:2;margin-top:0}
-  #view-swap .trio{order:3;margin-top:2px}
-  #view-swap .conv-card{order:4;margin-top:150px}
-  main{padding-bottom:64px}
+  #view-swap .conv-card{order:2;margin-top:118px}
+  #view-swap .powered{order:3;margin-top:12px}
+  main{padding-bottom:64px;margin-top:8px}
 }
