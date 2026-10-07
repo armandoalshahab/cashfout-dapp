@@ -41,7 +41,7 @@ body{overflow-x:hidden}
 .aurora i:nth-child(3){background:#2dd4bf;top:-40px;left:44%;animation-delay:-8s;opacity:.22}
 @keyframes drift{from{transform:translate(0,0) scale(1)}to{transform:translate(60px,40px) scale(1.18)}}
 .hero h1{margin:6px 0 8px;font-size:36px;position:relative;z-index:1}
-.rot-wrap{display:inline-block;min-width:130px;position:relative;vertical-align:baseline}
+.rot-wrap{display:inline-block;min-width:110px;position:relative;vertical-align:baseline;text-align:center}
 .rot{display:inline-flex;align-items:center;gap:9px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;transition:opacity .28s,transform .28s;will-change:opacity,transform}
 .rot.swapout{opacity:0;transform:translateY(14px)}
 .rot img.fl{width:26px;height:17px;border-radius:3px;box-shadow:0 0 0 1px #00000040}
@@ -171,3 +171,36 @@ img.fl{display:inline-block;border-radius:2px;object-fit:cover;vertical-align:mi
 .dot{width:7px;height:7px;border-radius:50%}
 .dot.live{background:var(--grn)} .dot.warn{background:var(--amb)} .dot.off{background:var(--red)}
 .feeleno{display:none}
+
+/* compact mode for short screens — trio must stay above the fold */
+@media(max-height:860px){
+  main{margin-top:10px}
+  .hero{margin-bottom:8px;padding-top:2px}
+  .hero h1{font-size:29px}
+  .hero .sub{font-size:13.5px;line-height:1.35}
+  .hero-stats{margin-top:8px}
+  .hero-stats span{padding:5px 11px;font-size:11.5px}
+  .conv-card{margin-top:12px;padding:18px 16px 16px}
+  .mini{padding:9px 12px}
+  .mini b{font-size:12.5px;margin-bottom:2px}
+  .mini i{font-size:11.5px}
+  .mini .m-emoji{font-size:16px;margin-bottom:3px}
+  .trio{margin-top:10px;gap:10px}
+  .powered{margin:2px 0 6px;font-size:12.5px}
+}
+@media(max-height:760px){
+  .hero .aurora{display:none}
+  .hero-stats{display:none}
+  .ticker{display:none}
+  .hero h1{font-size:26px;margin:2px 0 6px}
+}
+
+/* short screens: trio rides right below hero, converter card drops after */
+@media(max-height:1050px){
+  #view-swap{display:flex;flex-direction:column}
+  #view-swap .hero{order:1}
+  #view-swap .powered{order:2;margin-top:0}
+  #view-swap .trio{order:3;margin-top:2px}
+  #view-swap .conv-card{order:4;margin-top:150px}
+  main{padding-bottom:64px}
+}
