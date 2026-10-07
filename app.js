@@ -404,8 +404,14 @@ $('pkFiat').onclick = () => { pickTab = 'fiat'; renderPickList(); };
 $('flipBtn').onclick = flip;
 $('amtFrom').addEventListener('input', updateQuote);
 $('convertBtn').onclick = convert;
-$('quickFrom').innerHTML = ['10','100','1k'].map(q => `<button data-q="${q==='1k'?1000:q}">${q}</button>`).join('');
-$('quickFrom').querySelectorAll('button').forEach(b => b.onclick = () => { $('amtFrom').value = b.dataset.q; updateQuote(); });
+$('quickFrom').innerHTML = [25,50,100].map(q => `<button data-pct="${q}">${q}%</button>`).join('');
+$('quickFrom').querySelectorAll('button').forEach(b => b.onclick = () => {
+  const avail = from.kind === 'crypto'
+    ? (from.ref.id === 'MON' ? Number(monBal) / 1e18 : from.ref.id === 'WMON' ? 0 : Number(usdcBal) / 10 ** from.ref.decimals)
+    : (fiatLedger.USD || 0) / usdPer(from);
+  $('amtFrom').value = String(Math.floor(avail * Number(b.dataset.pct) / 100 * 1e8) / 1e8);
+  updateQuote();
+});
 APP.pmTypes.forEach(t => {
   const b = document.createElement('button'); b.textContent = `${t.emoji} ${t.label}`; b.dataset.t = t.id;
   if (t.id === pmType) b.classList.add('on');
