@@ -6,7 +6,6 @@
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
-#grain-canvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:2147483000;pointer-events:none;opacity:.7}
 body{background:radial-gradient(1200px 600px at 80% -10%,#2a1250 0%,var(--bg) 55%);color:var(--txt);font:15px/1.45 "Segoe UI",system-ui,-apple-system,sans-serif;min-height:100vh}
 a{color:var(--vio)}
 small{color:var(--mut)} code{background:#241541;padding:1px 6px;border-radius:5px;font-size:.85em;color:#cbb4ff}
