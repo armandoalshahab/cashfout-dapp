@@ -326,7 +326,7 @@ function renderPortfolio() {
                 : h.ref.id === 'USDC' ? 1 : 1;
     const val = (h.bal || 0) * price; total += val;
     rows.insertAdjacentHTML('beforeend',
-      `<div class="pf-row"><span class="as">${h.ref.emoji}<span>${h.ref.id}<i>${h.ref.name}${h.demo?' · demo':''}</i></span></span><span class="v">${fmt(h.bal||0,4)}</span><span class="v">$${fmt(price,6)}</span><span class="v">$${fmt(val,2)}</span><span>${h.ref.id!=='VAULT'?`<button class="conv" data-c="${h.ref.id}">Convert ⇄</button>`:''}</span></div>`);
+      `<div class="pf-row"><span class="as">${h.ref.emoji}<span>${h.ref.id}<i>${h.ref.name}${h.demo?' · demo':''}</i></span></span><span class="v">${fmt(h.bal||0,4)}</span><span class="v">$${fmt(price,6)}</span><span class="v">$${fmt(val,2)}</span><span>${h.ref.id!=='VAULT'?`<button class="conv" data-c="${h.ref.id}">Convert</button>`:''}</span></div>`);
   });
   $('pfTotal').textContent = '$' + fmt(total, 2);
   rows.querySelectorAll('.conv').forEach(b => b.onclick = () => {
