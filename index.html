@@ -1,142 +1,142 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>cashfout — crypto ⇄ fiat, no middleman</title>
-<meta name="description" content="Convert crypto to USD / JPY / IDR and back, settling on Monad Testnet. No banks in between.">
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<header class="topbar">
-  <div class="brand"><span class="logo">⇄</span><div><b>cashfout</b><small>cashing fiat out</small></div></div>
-  <nav class="tabs" id="tabs">
-    <button class="tab active" data-view="swap">Swap</button>
-    <button class="tab" data-view="portfolio">Portfolio</button>
-    <button class="tab" data-view="methods">Payment Method</button>
-  </nav>
-  <div class="top-right">
-    <span class="chip net" id="netChip">Monad Testnet · 10143</span>
-    <button class="btn ghost" id="connectBtn">Connect wallet</button>
-  </div>
-</header>
-
-<div class="ticker"><div class="ticker-row" id="tickerRow"></div></div>
-
-<main>
-  <!-- ============ SWAP ============ -->
-  <section class="view active" id="view-swap">
-    <div class="hero">
-      <h1>Convert <span id="heroOut">USD</span> instantly</h1>
-      <p class="sub">crypto → real money in <b>48 currencies</b> (USD · IDR · JPY · EUR…), and back. <b>No banks, no brokers, no middleman</b> — settlement on <a href="https://testnet.monad.xyz" target="_blank" rel="noopener">Monad Testnet</a>.</p>
-    </div>
-
-    <div class="conv-card">
-      <div class="conv-top">
-        <span class="pill">CONVERT</span>
-        <span class="rate-line" id="rateLine">loading live rate…</span>
-      </div>
-
-      <div class="leg" id="legFrom">
-        <div class="leg-head"><label>From</label><span class="bal" id="balFrom"></span></div>
-        <div class="leg-body">
-          <input id="amtFrom" class="amt" inputmode="decimal" placeholder="0.00" autocomplete="off">
-          <button class="asset-btn" id="pickFrom"><span class="a-emoji"></span><span class="a-sym"></span><span class="caret">▾</span></button>
-        </div>
-        <div class="leg-foot"><span id="usdFrom">≈ $0.00</span><span class="quick" id="quickFrom"></span></div>
-      </div>
-
-      <button class="flip" id="flipBtn" title="swap direction">⇅</button>
-
-      <div class="leg" id="legTo">
-        <div class="leg-head"><label>To</label><span class="feenote" id="feeNote"></span></div>
-        <div class="leg-body">
-          <input id="amtTo" class="amt" inputmode="decimal" placeholder="0.00" autocomplete="off" readonly>
-          <button class="asset-btn" id="pickTo"><span class="a-emoji"></span><span class="a-sym"></span><span class="caret">▾</span></button>
-        </div>
-        <div class="leg-foot"><span id="recvNote"></span></div>
-      </div>
-
-      <div class="quote-box" id="quoteBox">
-        <div class="q-row"><span>Rate</span><b id="qRate">—</b></div>
-        <div class="q-row"><span>Fee (<span id="qFeePct">0.5%</span>, cashout only)</span><b id="qFee">—</b></div>
-        <div class="q-row"><span>Destination</span><b id="qDest">—</b></div>
-        <div class="q-row"><span>Route</span><b id="qRoute">—</b></div>
-      </div>
-
-      <button class="btn primary big" id="convertBtn">Connect wallet to convert</button>
-      <p class="note" id="txNote"></p>
-    </div>
-
-    <div class="trio">
-      <div class="mini"><span class="m-emoji">🪙</span><b>Crypto → Fiat</b><i>sell MON / USDC on-chain, cash lands at your payout method</i></div>
-      <div class="mini"><span class="m-emoji">💸</span><b>Fiat → Crypto</b><i>top up from bank / e-wallet, credits settle to your wallet</i></div>
-      <div class="mini"><span class="m-emoji">🚫</span><b>Zero middleman</b><i>one contract route, live rate, fee only on cashout</i></div>
-    </div>
-    <div class="powered">Live FX from <code>er-api</code> · crypto pricing from <code>CoinGecko</code> · chain: <code>Monad Testnet 10143</code></div>
-  </section>
-
-  <!-- ============ PORTFOLIO ============ -->
-  <section class="view" id="view-portfolio">
-    <h2 class="sec-title">Portfolio</h2>
-    <div class="pf-head">
-      <div><small>Total value</small><h3 id="pfTotal">$0.00</h3></div>
-      <div class="pf-wallet"><small>wallet</small><b id="pfAddr">not connected</b></div>
-    </div>
-    <div class="pf-table">
-      <div class="pf-row head"><span>Asset</span><span>Balance</span><span>Price</span><span>Value</span><span></span></div>
-      <div id="pfRows"></div>
-    </div>
-    <h3 class="sub-title">Recent conversions</h3>
-    <div class="hist" id="histBox"><p class="empty">No conversions yet — your first cashout will show up here.</p></div>
-    <div class="testnet-note">⚠️ Testnet demo: balances shown are your real on-chain MON/USDC + a simulated fiat cash account (labelled FIAT-d), because fiat rails don't exist on testnet. Mainnet plan replaces FIAT-d with licensed payout partners.</div>
-  </section>
-
-  <!-- ============ PAYMENT METHOD ============ -->
-  <section class="view" id="view-methods">
-    <h2 class="sec-title">Payment methods</h2>
-    <p class="sub2">Where your fiat lands (cash-out) or comes from (top-up). Stored locally in your browser only — nothing is sent anywhere in this testnet demo.</p>
-    <div class="pm-grid">
-      <div class="pm-list" id="pmList"></div>
-      <div class="pm-form card">
-        <h3 id="pmFormTitle">Add payment method</h3>
-        <div class="pm-types" id="pmTypes"></div>
-        <div id="pmFields"></div>
-        <label class="fl">Label <input id="pmLabel" placeholder="e.g. Bank BCA personal" maxlength="28"></label>
-        <label class="fl">Default fiat <select id="pmFiat"></select></label>
-        <button class="btn primary" id="pmSave" disabled>Save method</button>
-        <p class="pm-hint" id="pmHint"></p>
-      </div>
-    </div>
-  </section>
-</main>
-
-<!-- asset picker -->
-<div class="overlay hidden" id="pickOverlay">
-  <div class="picker card">
-    <h3 id="pickTitle">Select asset</h3>
-    <div class="pk-tabs"><button id="pkCrypto" class="pk-tab active">Crypto (on-chain)</button><button id="pkFiat" class="pk-tab">Fiat</button></div>
-    <div class="pk-list" id="pkList"></div>
-  </div>
-</div>
-
-<!-- wallet modal -->
-<div class="overlay hidden" id="walletOverlay">
-  <div class="picker card">
-    <h3>Connect a wallet</h3>
-    <div class="pk-list" id="walletList"></div>
-    <div class="wm-foot">
-      <div class="wm-links"><a href="https://faucet.monad.xyz" target="_blank" rel="noopener">🪝 Get MON</a><a href="https://faucet.circle.com" target="_blank" rel="noopener">💵 Get USDC</a><a href="https://testnet.monadvision.com" target="_blank" rel="noopener">🔍 Explorer</a></div>
-      <p class="tiny">Auto-switches to Monad Testnet (10143) on connect. RPC: <code>https://testnet-rpc.monad.xyz</code></p>
-    </div>
-  </div>
-</div>
-
-<div id="toastBox"></div>
-<div id="txFloat" class="hidden"><span class="txdot"></span><span id="txFloatTxt">confirming on Monad…</span></div>
-<div id="statusStrip"><span class="dot live"></span><span id="statusTxt">initialising…</span><span class="ss-right" id="lastRefresh"></span></div>
-
-<script src="config.js"></script>
-<script src="app.js"></script>
-</body>
-</html>
+1|<!doctype html>
+2|<html lang="en">
+3|<head>
+4|<meta charset="utf-8">
+5|<meta name="viewport" content="width=device-width, initial-scale=1">
+6|<title>cashfout — crypto ⇄ fiat, no middleman</title>
+7|<meta name="description" content="Convert crypto to USD / JPY / IDR and back, settling on Monad Testnet. No banks in between.">
+8|<link rel="stylesheet" href="style.css?v=20261003b>
+9|</head>
+10|<body>
+11|<header class="topbar">
+12|  <div class="brand"><span class="logo">⇄</span><div><b>cashfout</b><small>cashing fiat out</small></div></div>
+13|  <nav class="tabs" id="tabs">
+14|    <button class="tab active" data-view="swap">Swap</button>
+15|    <button class="tab" data-view="portfolio">Portfolio</button>
+16|    <button class="tab" data-view="methods">Payment Method</button>
+17|  </nav>
+18|  <div class="top-right">
+19|    <span class="chip net" id="netChip">Monad Testnet · 10143</span>
+20|    <button class="btn ghost" id="connectBtn">Connect wallet</button>
+21|  </div>
+22|</header>
+23|
+24|<div class="ticker"><div class="ticker-row" id="tickerRow"></div></div>
+25|
+26|<main>
+27|  <!-- ============ SWAP ============ -->
+28|  <section class="view active" id="view-swap">
+29|    <div class="hero">
+30|      <h1>Convert <span id="heroOut">USD</span> instantly</h1>
+31|      <p class="sub">crypto → real money in <b>48 currencies</b> (USD · IDR · JPY · EUR…), and back. <b>No banks, no brokers, no middleman</b> — settlement on <a href="https://testnet.monad.xyz" target="_blank" rel="noopener">Monad Testnet</a>.</p>
+32|    </div>
+33|
+34|    <div class="conv-card">
+35|      <div class="conv-top">
+36|        <span class="pill">CONVERT</span>
+37|        <span class="rate-line" id="rateLine">loading live rate…</span>
+38|      </div>
+39|
+40|      <div class="leg" id="legFrom">
+41|        <div class="leg-head"><label>From</label><span class="bal" id="balFrom"></span></div>
+42|        <div class="leg-body">
+43|          <input id="amtFrom" class="amt" inputmode="decimal" placeholder="0.00" autocomplete="off">
+44|          <button class="asset-btn" id="pickFrom"><span class="a-emoji"></span><span class="a-sym"></span><span class="caret">▾</span></button>
+45|        </div>
+46|        <div class="leg-foot"><span id="usdFrom">≈ $0.00</span><span class="quick" id="quickFrom"></span></div>
+47|      </div>
+48|
+49|      <button class="flip" id="flipBtn" title="swap direction">⇅</button>
+50|
+51|      <div class="leg" id="legTo">
+52|        <div class="leg-head"><label>To</label><span class="feenote" id="feeNote"></span></div>
+53|        <div class="leg-body">
+54|          <input id="amtTo" class="amt" inputmode="decimal" placeholder="0.00" autocomplete="off" readonly>
+55|          <button class="asset-btn" id="pickTo"><span class="a-emoji"></span><span class="a-sym"></span><span class="caret">▾</span></button>
+56|        </div>
+57|        <div class="leg-foot"><span id="recvNote"></span></div>
+58|      </div>
+59|
+60|      <div class="quote-box" id="quoteBox">
+61|        <div class="q-row"><span>Rate</span><b id="qRate">—</b></div>
+62|        <div class="q-row"><span>Fee (<span id="qFeePct">0.5%</span>, cashout only)</span><b id="qFee">—</b></div>
+63|        <div class="q-row"><span>Destination</span><b id="qDest">—</b></div>
+64|        <div class="q-row"><span>Route</span><b id="qRoute">—</b></div>
+65|      </div>
+66|
+67|      <button class="btn primary big" id="convertBtn">Connect wallet to convert</button>
+68|      <p class="note" id="txNote"></p>
+69|    </div>
+70|
+71|    <div class="trio">
+72|      <div class="mini"><span class="m-emoji">🪙</span><b>Crypto → Fiat</b><i>sell MON / USDC on-chain, cash lands at your payout method</i></div>
+73|      <div class="mini"><span class="m-emoji">💸</span><b>Fiat → Crypto</b><i>top up from bank / e-wallet, credits settle to your wallet</i></div>
+74|      <div class="mini"><span class="m-emoji">🚫</span><b>Zero middleman</b><i>one contract route, live rate, fee only on cashout</i></div>
+75|    </div>
+76|    <div class="powered">Live FX from <code>er-api</code> · crypto pricing from <code>CoinGecko</code> · chain: <code>Monad Testnet 10143</code></div>
+77|  </section>
+78|
+79|  <!-- ============ PORTFOLIO ============ -->
+80|  <section class="view" id="view-portfolio">
+81|    <h2 class="sec-title">Portfolio</h2>
+82|    <div class="pf-head">
+83|      <div><small>Total value</small><h3 id="pfTotal">$0.00</h3></div>
+84|      <div class="pf-wallet"><small>wallet</small><b id="pfAddr">not connected</b></div>
+85|    </div>
+86|    <div class="pf-table">
+87|      <div class="pf-row head"><span>Asset</span><span>Balance</span><span>Price</span><span>Value</span><span></span></div>
+88|      <div id="pfRows"></div>
+89|    </div>
+90|    <h3 class="sub-title">Recent conversions</h3>
+91|    <div class="hist" id="histBox"><p class="empty">No conversions yet — your first cashout will show up here.</p></div>
+92|    <div class="testnet-note">⚠️ Testnet demo: balances shown are your real on-chain MON/USDC + a simulated fiat cash account (labelled FIAT-d), because fiat rails don't exist on testnet. Mainnet plan replaces FIAT-d with licensed payout partners.</div>
+93|  </section>
+94|
+95|  <!-- ============ PAYMENT METHOD ============ -->
+96|  <section class="view" id="view-methods">
+97|    <h2 class="sec-title">Payment methods</h2>
+98|    <p class="sub2">Where your fiat lands (cash-out) or comes from (top-up). Stored locally in your browser only — nothing is sent anywhere in this testnet demo.</p>
+99|    <div class="pm-grid">
+100|      <div class="pm-list" id="pmList"></div>
+101|      <div class="pm-form card">
+102|        <h3 id="pmFormTitle">Add payment method</h3>
+103|        <div class="pm-types" id="pmTypes"></div>
+104|        <div id="pmFields"></div>
+105|        <label class="fl">Label <input id="pmLabel" placeholder="e.g. Bank BCA personal" maxlength="28"></label>
+106|        <label class="fl">Default fiat <select id="pmFiat"></select></label>
+107|        <button class="btn primary" id="pmSave" disabled>Save method</button>
+108|        <p class="pm-hint" id="pmHint"></p>
+109|      </div>
+110|    </div>
+111|  </section>
+112|</main>
+113|
+114|<!-- asset picker -->
+115|<div class="overlay hidden" id="pickOverlay">
+116|  <div class="picker card">
+117|    <h3 id="pickTitle">Select asset</h3>
+118|    <div class="pk-tabs"><button id="pkCrypto" class="pk-tab active">Crypto (on-chain)</button><button id="pkFiat" class="pk-tab">Fiat</button></div>
+119|    <div class="pk-list" id="pkList"></div>
+120|  </div>
+121|</div>
+122|
+123|<!-- wallet modal -->
+124|<div class="overlay hidden" id="walletOverlay">
+125|  <div class="picker card">
+126|    <h3>Connect a wallet</h3>
+127|    <div class="pk-list" id="walletList"></div>
+128|    <div class="wm-foot">
+129|      <div class="wm-links"><a href="https://faucet.monad.xyz" target="_blank" rel="noopener">🪝 Get MON</a><a href="https://faucet.circle.com" target="_blank" rel="noopener">💵 Get USDC</a><a href="https://testnet.monadvision.com" target="_blank" rel="noopener">🔍 Explorer</a></div>
+130|      <p class="tiny">Auto-switches to Monad Testnet (10143) on connect. RPC: <code>https://testnet-rpc.monad.xyz</code></p>
+131|    </div>
+132|  </div>
+133|</div>
+134|
+135|<div id="toastBox"></div>
+136|<div id="txFloat" class="hidden"><span class="txdot"></span><span id="txFloatTxt">confirming on Monad…</span></div>
+137|<div id="statusStrip"><span class="dot live"></span><span id="statusTxt">initialising…</span><span class="ss-right" id="lastRefresh"></span></div>
+138|
+139|<script src="config.js?v=20261003b></script>
+140|<script src="app.js?v=20261003b></script>
+141|</body>
+142|</html>
