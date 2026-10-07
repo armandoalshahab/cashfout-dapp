@@ -1,5 +1,5 @@
+headersOrigin = "config"
 plugins = []
-headers = []
 redirects = []
 
 [functions]
@@ -23,3 +23,9 @@ publishOrigin = "default"
 [build.processing.js]
 
 [build.services]
+
+[[headers]]
+for = "/*"
+
+[headers.values]
+Cache-Control = "no-cache"
