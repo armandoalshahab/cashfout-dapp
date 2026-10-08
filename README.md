@@ -4,6 +4,8 @@ A testnet dApp for the **Monad Developer Hackathon** ([hackathon.monad.xyz](http
 
 **Live demo:** https://cashfout.pages.dev/
 
+**Demo video (3 min, English narration):** [`demo.mp4`](https://cashfout.pages.dev/demo.mp4) — a real, end-to-end on-chain cashout (MON → vault → IDR payout) recorded live on Monad Testnet.
+
 ## What it does
 
 Convert crypto to conventional money (USD, JPY, IDR, EUR…) — and back — without intermediaries:
