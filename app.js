@@ -194,6 +194,8 @@ const PROVIDERS = [
   { id: 'bitget', label: 'Bitget Wallet', icon: '💠', hint: 'browser extension', get: () => window.bitkeep?.ethereum },
   { id: 'coinbase', label: 'Coinbase Wallet', icon: '🔵', hint: 'CDP / extension', get: () => window.coinbaseWalletExtension },
   { id: 'trust', label: 'Trust Wallet', icon: '🛡', hint: 'browser extension', get: () => window.trustWallet },
+  { id: 'ledger', label: 'Ledger', icon: '🔐', hint: 'USB · open Ethereum app, confirm on device', hwFn: () => ledgerConnect() },
+  { id: 'trezor', label: 'Trezor', icon: '🌳', hint: 'USB · confirm on device', hwFn: () => trezorConnect() },
   { id: 'injected', label: 'Other injected', icon: '🪪', hint: 'any EIP-1193', get: () => window.ethereum }
 ];
 function openWallet() {
@@ -205,10 +207,25 @@ function openWallet() {
   PROVIDERS.forEach(p => {
     const b = document.createElement('button'); b.className = 'pk-row';
     b.innerHTML = `<span class="n">${p.icon}</span><span><b>${p.label}</b><i>${p.hint}</i></span>`;
-    b.onclick = () => connect(p);
+    b.onclick = () => p.hwFn ? connectHW(p) : connect(p);
     list.appendChild(b);
   });
   $('walletOverlay').classList.remove('hidden');
+}
+async function connectHW(p) {
+  if (!navigator.usb) { toast('WebUSB needs Chrome or Edge (desktop)', 'err'); return; }
+  showFloat(`opening ${p.label}…`);
+  if (window.HW) HW.ui = (msg) => msg ? showFloat(msg) : hideFloat();
+  try {
+    const prov = await p.hwFn();
+    hideFloat();
+    P = prov; acct = (await prov.request({ method: 'eth_accounts' }))[0];
+    $('walletOverlay').classList.add('hidden');
+    $('connectBtn').textContent = acct.slice(0, 6) + '…' + acct.slice(-4);
+    $('pfAddr').textContent = acct;
+    await refreshBalances();
+    toast(`${p.label} connected ⚡`, 'ok');
+  } catch (e) { hideFloat(); toast(p.label + ': ' + (e.message || e).toString().slice(0, 70), 'err'); }
 }
 async function connect(p) {
   const eth = p.get && p.get();
