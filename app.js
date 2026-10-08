@@ -447,16 +447,6 @@ $('pmFiat').innerHTML = window.CF.fiats.map(f => `<option value="${f.id}">${f.id
 $('pmSave').onclick = savePM;
 $('pmFields').addEventListener('input', validatePM);
 
-// vault settings
-const setBtn = document.createElement('button'); setBtn.className = 'btn'; setBtn.textContent = '⚙ vault';
-setBtn.style.cssText = 'padding:6px 10px;font-size:12px';
-setBtn.onclick = () => {
-  const v = prompt('Settlement vault address (where cashouts land on-chain):', $('netChip').dataset.vault || APP.defaultVault);
-  if (v && /^0x[a-fA-F0-9]{40}$/.test(v.trim())) { APP.defaultVault = v.trim(); $('netChip').dataset.vault = v; toast('vault updated ✓', 'ok'); }
-  else if (v) toast('invalid address — vault unchanged', 'err');
-};
-document.querySelector('.top-right').appendChild(setBtn);
-
 function boot() {
   if (window.__cfBooted) return;
   window.__cfBooted = true;
