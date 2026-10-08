@@ -4,7 +4,8 @@ A testnet dApp for the **Monad Developer Hackathon** ([hackathon.monad.xyz](http
 
 **Live demo:** https://cashfout.pages.dev/
 
-**Demo video (3 min, English narration):** [`demo.mp4`](https://cashfout.pages.dev/demo.mp4) — a real, end-to-end on-chain cashout (MON → vault → IDR payout) recorded live on Monad Testnet.
+**Pitch video (1:30, English):** [`pitch.mp4`](https://raw.githubusercontent.com/armandoalshahab/cashfout-dapp/main/pitch.mp4) — team, problem, why Monad.
+**Full product demo (2:42, English narration):** [`demo.mp4`](https://raw.githubusercontent.com/armandoalshahab/cashfout-dapp/main/demo.mp4) — a real, end-to-end on-chain cashout (MON → vault → IDR payout) recorded live on Monad Testnet.
 
 ## What it does
 
