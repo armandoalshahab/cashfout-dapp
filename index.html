@@ -5,11 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>cashfout — crypto ⇄ fiat, no middleman</title>
 <meta name="description" content="Convert crypto to USD / JPY / IDR and back, settling on Monad Testnet. No banks in between.">
-<link rel="stylesheet" href="style.css?v=20261004b">
+<link rel="stylesheet" href="style.css?v=20261004c">
 </head>
 <body>
 <header class="topbar">
-  <div class="brand"><span class="logo">⇄</span><div><b>cashfout</b><small>cashing fiat out</small></div></div>
+  <div class="brand"><span class="logo"><svg viewBox="0 0 48 48" aria-hidden="true">
+    <defs>
+      <linearGradient id="ring" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#2e6bff"/><stop offset=".45" stop-color="#7a3cf0"/>
+        <stop offset=".75" stop-color="#b48cff"/><stop offset="1" stop-color="#f2f4ff"/>
+      </linearGradient>
+      <linearGradient id="sw" x1="0" y1="1" x2="1" y2="0">
+        <stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#cfd8ff"/>
+      </linearGradient>
+      <pattern id="weave" width="48" height="48" patternUnits="userSpaceOnUse" patternTransform="rotate(-38)">
+        <line x1="0" y1="0" x2="0" y2="48" stroke="#0a0f2e" stroke-width="1.1" opacity=".7"/>
+      </pattern>
+    </defs>
+    <line x1="-2" y1="38" x2="34" y2="-2" stroke="#3a55b8" stroke-width=".6" opacity=".35"/>
+    <line x1="14" y1="50" x2="50" y2="14" stroke="#3a55b8" stroke-width=".6" opacity=".35"/>
+    <path d="M34 7.5 A17.5 17.5 0 1 0 34 40.5" fill="none" stroke="url(#ring)" stroke-width="7.4" stroke-linecap="round"/>
+    <path d="M34 7.5 A17.5 17.5 0 1 0 34 40.5" fill="none" stroke="url(#weave)" stroke-width="7.4" stroke-linecap="round"/>
+    <path d="M3 45 Q40 33 45 3 Q38 38 5 47 Z" fill="url(#sw)"/>
+    <path d="M3 45 Q40 33 45 3 Q38 38 5 47 Z" fill="none" stroke="#dfe8ff" stroke-width=".5" opacity=".7"/>
+  </svg></span><div><b>cashfout</b><small>cashing fiat out</small></div></div>
   <nav class="tabs" id="tabs">
     <button class="tab active" data-view="swap">Swap</button>
     <button class="tab" data-view="portfolio">Portfolio</button>
@@ -135,8 +154,8 @@
 <div id="txFloat" class="hidden"><span class="txdot"></span><span id="txFloatTxt">confirming on Monad…</span></div>
 <div id="statusStrip"><span class="dot live"></span><span id="statusTxt">initialising…</span><span class="ss-right" id="lastRefresh"></span></div>
 
-<script src="config.js?v=20261004b"></script>
-<script src="app.js?v=20261004b"></script>
-<script src="flame.js?v=20261004b"></script>
+<script src="config.js?v=20261004c"></script>
+<script src="app.js?v=20261004c"></script>
+<script src="flame.js?v=20261004c"></script>
 </body>
 </html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<title>Breakdown Visual Redesain — cashfout</title>
+<style>
+  @page{size:A4;margin:0}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:#fff;color:#1d1530;width:210mm}
+  .page{padding:14mm 14mm 10mm}
+  .kicker{font-size:9pt;letter-spacing:.22em;text-transform:uppercase;color:#7a3ff2;font-weight:800}
+  h1{font-size:19pt;line-height:1.15;margin:2mm 0 1mm;color:#120a20}
+  h1 span{background:linear-gradient(90deg,#7a3ff2,#e248c8);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .meta{font-size:8.5pt;color:#6b6478;margin-bottom:5mm}
+  .shots{display:flex;gap:4mm;margin-bottom:5mm}
+  .shot{flex:1}
+  .shot img{width:100%;border:1px solid #e3def0;border-radius:6px;display:block}
+  .shot b{display:block;font-size:9pt;margin:1.5mm 0 .5mm;color:#120a20}
+  .shot small{font-size:7.5pt;color:#6b6478;line-height:1.35;display:block}
+  .tag{display:inline-block;font-size:7pt;font-weight:800;letter-spacing:.12em;padding:.6mm 2mm;border-radius:3px;margin-bottom:1.5mm}
+  .tag.b{background:#f3eefe;color:#7a3ff2}
+  .tag.a{background:#17092e;color:#d9b8ff}
+  h2{font-size:11pt;color:#120a20;margin:4mm 0 2mm;display:flex;align-items:baseline;gap:2.5mm}
+  h2.pbreak{break-before:page;margin-top:0}
+  .num{width:6mm;height:6mm;border-radius:50%;background:linear-gradient(135deg,#7a3ff2,#e248c8);color:#fff;font-size:9pt;font-weight:800;display:inline-flex;align-items:center;justify-content:center;flex:none;transform:translateY(1mm)}
+  p{font-size:9pt;line-height:1.5;margin-bottom:1.6mm;text-align:justify}
+  b.hl{color:#7a3ff2}
+  ul{margin:0 0 2mm 4.5mm}
+  li{font-size:9pt;line-height:1.45;margin-bottom:1mm}
+  .foot{margin-top:4mm;padding-top:2.5mm;border-top:1px solid #e9e4f4;font-size:7.5pt;color:#8b8498;display:flex;justify-content:space-between}
+</style></head>
+<body><div class="page">
+
+  <div class="kicker">Tugas Redesain — Breakdown Visual</div>
+  <h1>Redesain halaman konversi <span>cashfout</span> (crypto ⇄ fiat dApp)</h1>
+  <div class="meta">Studi kasus: web app https://cashfout.pages.dev · armandomarais · 8 Oktober 2026</div>
+
+  <div class="shots">
+    <div class="shot">
+      <span class="tag b">SEBELUM — v1</span>
+      <img src="before_v1.png" alt="before">
+      <b>Konten asli (first build)</b>
+      <small>Stack tengah datar: hero kecil, card CONVERT tanpa penanda fokus, aksen ungu/kuning/merah bersaing, hierarki flat, CTA rendah kontras.</small>
+    </div>
+    <div class="shot">
+      <span class="tag a">SESUDAH — hasil redesain</span>
+      <img src="after_final.png" alt="after">
+      <b>Hasil redesain (live)</b>
+      <small>Satu fokus terang (card + flame-wrap ungu), tipografi berjenjang, satu aksen primer + gold sebagai sinyal data, seluruh aksi muat tanpa scroll.</small>
+    </div>
+  </div>
+
+  <h2><span class="num">1</span> Elemen Desain yang Ditonjolkan</h2>
+  <ul>
+    <li><b class="hl">Negative space</b> — jarak vertikal dikalibrasi (gap 72&nbsp;px antara pills dan api) agar elemen fokus punya ruang "bernapas" dan gutter mati di kiri-kanan hilang karena kolom konten dimaksimalkan. Ruang kosong difungsikan sebagai jeda antarblok, bukan sisa layout.</li>
+    <li><b class="hl">Line</b> — garis tepi menyala (border glow) yang di-puncak-kan jadi <i>flame-wrap</i>: satu kontur penutup card yang sekaligus memisahkan area "cerita" (hero) dari area "aksi" (converter). Garis horizontal ticker dan pemisah dashed pada blok rate dipakai terbatas sebagai pengelompok, bukan dekorasi.</li>
+    <li><b class="hl">Typography</b> — skala tipografi dibuat berjenjang dan kontras-naik: headline 26–36&nbsp;px, sub-copy digedein ke 14.5–15.5&nbsp;px, nav 15.5&nbsp;px bold, angka kursif monospace untuk rate. Satu families, tiga level — pembaca tahu mana judul, mana instruksi, mana data.</li>
+    <li><b class="hl">Warna</b> — palet didisiplinkan dari multi-aksen (ungu+magenta+kuning+merah) jadi satu primer (gradien ungu→magenta) + satu sinyal (gold, khusus angka/rate) di atas dasar violet gelap.</li>
+    <li><b class="hl">Motion</b> — dua gerak fungsional: ticker marquee (bukti data live) dan api yang berkedip pelan (menandai card aktif). Elemen lain diam, supaya gerak tidak saling rebut.</li>
+  </ul>
+
+  <h2 class="pbreak"><span class="num">2</span> Prinsip Desain yang Diterapkan</h2>
+  <p><b class="hl">Visual hierarchy</b> dibangun tiga tingkat: (1) headline "Convert ___ instantly" sebagai pintu masuk, (2) pills statistik sebagai dukungan kredibilitas, (3) card CONVERT sebagai tujuan akhir — diperkuat <b>focal point</b> lewat flame-wrap: area paling terang dan paling dinamis di layar sengaja ditempatkan tepat di objek aksi, sehingga alur mata audiens dibajak: teks&nbsp;→&nbsp;janji&nbsp;→&nbsp;<b>api&nbsp;→&nbsp;card&nbsp;→&nbsp;tombol CTA</b>. Elemen non-aksi (footer kredit, ticker) ditekan kontrasnya.</p>
+  <p><b class="hl">Contrast</b> dipakai sebagai alat navigasi, bukan hiasan: putih vs ungu gelap untuk teks, gradien terang untuk tombol primer, gold satu-satunya untuk angka "hidup" (rate, 1&nbsp;MON≈IDR). Prinsip turunan yang menopang: <b>proximity</b> (From⇄To→CTA disatukan dalam satu kartu = satu tugas), <b>repetition</b> (pill, radius, border konsisten), dan <b>dominance</b> (satu elemen api-terang di layar, yang lain tunduk).</p>
+
+  <h2><span class="num">3</span> Solusi Visual</h2>
+  <ul>
+    <li><b>Tidak ada focal point</b> di versi lama — mata mengembara (headline → label kuning → card → 3 kartu fitur). Solusi: flame-wrap + border glow membuat converter card jadi satu-satunya magnet, dan 3 kartu fitur dihapus karena mengencerkan fokus.</li>
+    <li><b>CTA rendah kontras &amp; kejauhan</b> — tombol utama nyaris seperti disabled dan butuh scroll. Solusi: seluruh fold dikompaksi (rhythm dipangkas bertahap 150→72&nbsp;px, padding diperkecil) sampai <i>zero-scroll</i>: headline, card, dan tombol "convert" tampil dalam satu layar penuh.</li>
+    <li><b>Hierarki datar antar-teks</b> — sub-copy 12.5&nbsp;px abu tenggelam. Solusi: font diperbesar bertingkat dan warna teks pendukung dinaikkan kontrasnya (muted → lavender terang), angka dipindah ke monospace agar terbaca sebagai data.</li>
+    <li><b>Aksen liar</b> — kuning + merah + emoji bendera rusak (Windows merender huruf "ID/CH"). Solusi: emoji diganti gambar bendera CDN, kuning dihemat khusus rate, merah dihapus.</li>
+  </ul>
+
+  <div class="foot"><span>Before/after adalah screenshot nyata build v1 vs build final (git history terverifikasi).</span><span>cashfout.pages.dev</span></div>
+</div></body></html>
